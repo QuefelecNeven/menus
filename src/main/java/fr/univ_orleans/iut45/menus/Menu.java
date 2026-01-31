@@ -1,4 +1,4 @@
-package fr.univ_orleans.iut45.menus;
+cpackage fr.univ_orleans.iut45.menus;
 
 import java.util.List;
 
@@ -73,4 +73,78 @@ class Menu {
         return maxE + maxP + maxD;
 
     }
+
+  public boolean menuVegetariens() {
+      for (Plat p : entrees) {
+        if (p.contientViande()) return false;
+    }
+    for (Plat p : plats_principaux) {
+        if (p.contientViande()) return false;
+    }
+    for (Plat p : desserts) {
+        if (p.contientViande()) return false;
+    }
+    return true;
+  }
+
+  public boolean estAllergenne(String allergie){
+    for (Plat p : entrees){
+      if (p.getNomAllergenes.equals(allergie)) return false;
+    }
+    for (Plat p : plats_principaux){
+      if (p.getNomAllergenes.equals(allergie)) return false ;
+    }
+    for (Plat p : desserts){
+      if (p.getNomAllergenes.equals(allergie)) return false ;
+    }
+    return true;
+
+  }
+
+public List<String> allergenesObligatoires() {
+    List<String> obligatoiresTotal = new ArrayList<>();
+    if (entrees.size() > 0) {
+        for (String allergene : entrees.get(0).getListeAllergenes()) {
+            boolean presentDansToutes = true;
+              for (Plat p : entrees) {
+                if (!p.getListeAllergenes().equals(allergene)) {
+                    presentDansToutes = false;
+                }
+            }
+            if (presentDansToutes) {
+                obligatoiresTotal.add(allergene);
+            }
+        }
+    }
+    if (plats_principaux.size() > 0 ) {
+      for (String allergene : plats_principaux.get(0).getListeAllergenes()){
+        boolean presentDansToutes = true ;
+        for (Plat p : plats_principaux){
+          if (!p.getListeAllergenes().equals(allergene)){
+            presentDansToutes = false;
+          }
+        }
+        if (presentDansToutes){
+          obligatoiresTotal.add(allergenes);
+        }
+      }
+    }
+
+    if (desserts.size() > 0){
+      for (String allergene : desserts.get(0).getListeAllergenes()){
+        boolean presentDansToutes = true;
+        for (Plat p : desserts){
+          if (!p.getListeAllergenes().equals(allergene)){
+            presentDansToutes = false;
+          }
+        }
+        if (presentDansToutes){
+          presentDansToutes = true;
+        }
+      }
+
+    }
+
+    return obligatoiresTotal;
+}
 }
